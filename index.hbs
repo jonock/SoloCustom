@@ -39,6 +39,10 @@
                             <span class="gh-btn gh-primary-btn">Subscribe</span>
                         </div>
                     {{/unless}}
+                {{else}}
+                    {{#if @custom.secondary_header}}
+                    <p class="gh-about-secondary">{{{@custom.secondary_header}}}</p>
+                    {{/if}}
                 {{/if}}
             </div>
         </div>
