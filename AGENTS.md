@@ -12,7 +12,7 @@ This file provides guidance for AI coding agents working on this repository.
 - **Styling**: PostCSS with autoprefixer and cssnano
 - **JavaScript**: Vanilla JS, minified via Gulp
 - **Build Tool**: Gulp 5
-- **Package Manager**: Yarn
+- **Package Manager**: pnpm
 
 ## Project Structure
 
@@ -35,16 +35,16 @@ This file provides guidance for AI coding agents working on this repository.
 
 ```bash
 # Install dependencies
-yarn
+pnpm install
 
 # Build assets and watch for changes (development)
-yarn dev
+pnpm dev
 
 # Run theme validation
-yarn test
+pnpm test
 
 # Package theme for distribution
-yarn zip
+pnpm zip
 ```
 
 ## Key Guidelines
@@ -83,7 +83,7 @@ yarn zip
 
 ## Testing
 
-Run `yarn test` to validate the theme using [gscan](https://github.com/TryGhost/gscan), Ghost's official theme validator. This checks for:
+Run `pnpm test` to validate the theme using [gscan](https://github.com/TryGhost/gscan), Ghost's official theme validator. This checks for:
 
 - Required files and structure
 - Template syntax errors
@@ -106,7 +106,7 @@ The GitHub Actions workflow (`.github/workflows/main.yml`) automatically deploys
 
 ### Modifying styles
 1. Edit CSS files in `assets/css/`
-2. Run `yarn dev` to compile and watch for changes
+2. Run `pnpm dev` to compile and watch for changes
 3. Compiled CSS appears in `assets/built/`
 
 ## Resources
@@ -114,3 +114,34 @@ The GitHub Actions workflow (`.github/workflows/main.yml`) automatically deploys
 - [Ghost Theme Documentation](https://ghost.org/docs/themes/)
 - [Ghost Handlebars Helpers](https://ghost.org/docs/themes/helpers/)
 - [gscan Theme Validator](https://github.com/TryGhost/gscan)
+
+
+# Upstream guidance
+
+## Scope
+
+This package is the Solo Ghost theme. In the standalone mirror repository, this tree is pushed from `TryGhost/Themes/packages/solo` by subtree sync; make durable theme-content changes in `TryGhost/Themes` unless the task is explicitly repo-level metadata or GitHub settings.
+
+## Commands
+
+Use pnpm, pinned by `package.json`.
+
+```bash
+pnpm install
+pnpm dev
+pnpm test
+pnpm zip
+```
+
+From the `TryGhost/Themes` monorepo root, validate this package with:
+
+```bash
+pnpm test:ci --theme solo
+```
+
+## Boundaries
+
+- Edit source CSS in `assets/css/`, source JavaScript in `assets/js/`, and templates/partials as `.hbs` files.
+- Keep generated `assets/built/` files in sync when source assets change.
+- Do not commit `node_modules/`, secrets, or local Ghost content.
+- Translation changes normally belong in `TryGhost/Themes/packages/theme-translations`; package-local locale overrides should be intentional and rebuilt.
